@@ -1,0 +1,7 @@
+.idea
+node_modules
+bundle.js
+*.iml
+geth.log
+dist/
+firebase-debug.log
