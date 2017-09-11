@@ -52,16 +52,9 @@ html {
   background-color: $red !important;
 }
 
-.material-tooltip {
-  margin-top: -10px;
-
-  span {
-    color: $primary-3;
-  }
-
-  .backdrop {
-    background-color: $primary-0 !important;
-  }
+.can-be-closed-chip {
+  color: white !important;
+  background-color: $orange !important;
 }
 
 nav {
@@ -89,14 +82,7 @@ nav {
   font-family: SourceExtraLight;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: $primary-2;
-}
-
-.subtitle {
-  font-family: SourceExtraLight;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: $primary-5;
+  color: $primary-4 !important;
 }
 
 p.labeled {
@@ -125,7 +111,7 @@ p.labeled {
     width: 50%;
     margin-top: 70px;
     margin-left: 25%;
-    color: $primary-2;
+    color: $primary-3;
     text-align: center;
     opacity: 1 !important;
     text-transform: lowercase;
@@ -145,34 +131,12 @@ p.labeled {
 //########## HOME #############
 
 .raffles-list {
+  a {
+    color: $primary-4 !important;
+  }
+
   .chip {
     margin-top: -5px !important;
-  }
-}
-
-//########## TRANSACTIONS #############
-
-.transactions-list {
-  margin-top: 40px;
-}
-
-//########## NEW CONTRACT #############
-
-.congrats-card {
-  .card-title {
-    color: $primary-2;
-    font-size: 14px;
-    font-family: SourceExtraLight;
-    letter-spacing: 0;
-    text-transform: uppercase;
-  }
-
-  .card-content {
-    color: $primary-5;
-  }
-
-  .card-action {
-    text-align: right;
   }
 }
 
@@ -186,4 +150,10 @@ p.labeled {
   border-radius: 20px;
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
+}
+
+.card {
+  .card-action {
+    text-align: right !important;
+  }
 }

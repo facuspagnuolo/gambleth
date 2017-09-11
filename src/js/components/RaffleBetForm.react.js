@@ -34,17 +34,13 @@ export default class RaffleBetForm extends React.Component {
                 <label htmlFor="bettor" className={this.state.bettor ? 'active' : ''}>You (address)</label>
                 <input value={this.state.bettor} type="text" onChange={this._updateBettor} id="bettor" required/>
               </div>
-              <div className="input-field col s6">
+              <div className="input-field col s4">
                 { account ? <p className="balance-notification">Your balance: { account.balance }</p> : '' }
               </div>
             </div>
           </div>
           <div className="card-action">
-            <div className="row">
-              <div className="col s3 offset-s9">
-                <button disabled={!raffle.opened} className="btn btn-primary">Buy Ticket!</button>
-              </div>
-            </div>
+            <button disabled={!raffle.opened} className="btn btn-primary">Buy Ticket!</button>
           </div>
         </form>
       </div>

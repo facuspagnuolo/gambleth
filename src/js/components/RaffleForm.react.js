@@ -1,9 +1,10 @@
 import React from 'react';
 import Store from '../store'
 import RaffleActions from '../actions/raffles'
-import AccountActions from "../actions/accounts";
+import AccountActions from '../actions/accounts'
+import { withRouter } from 'react-router-dom'
 
-export default class RaffleForm extends React.Component {
+class RaffleForm extends React.Component {
   constructor(props){
     super(props)
     this.state = { name: '', owner: '', days: 0, price: 0 }
@@ -45,11 +46,7 @@ export default class RaffleForm extends React.Component {
             </div>
           </div>
           <div className="card-action">
-            <div className="input-field row">
-              <div className="col s1 offset-s10">
-                <button className="btn btn-primary">Create</button>
-              </div>
-            </div>
+            <button className="btn btn-primary">Create</button>
           </div>
         </form>
       </div>
@@ -85,10 +82,14 @@ export default class RaffleForm extends React.Component {
   _onChange() {
     if(this.refs.ruffleForm) {
       const state = Store.getState();
-      const raffleAddress = state.account.newRaffleAddress;
-      raffleAddress ?
-        this.props.history.push(`/raffles/${raffleAddress}/new`) :
-        this.setState({ owner: state.account.address })
+      const newRaffleAddress = state.account.newRaffleAddress;
+      if(newRaffleAddress) {
+        this.props.history.push(`/raffles/${newRaffleAddress}/new`)
+        Store.dispatch(AccountActions.resetNewRaffle())
+      }
+      else this.setState({ owner: state.account.address })
     }
   }
 }
+
+export default withRouter(RaffleForm)

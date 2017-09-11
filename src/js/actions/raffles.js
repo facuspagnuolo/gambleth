@@ -1,3 +1,4 @@
+import moment from 'moment'
 import ErrorActions from './errors'
 import AccountActions from './accounts'
 import FetchingActions from './fetching'
@@ -25,6 +26,7 @@ const RaffleActions = {
 
   find(address) {
     return async function(dispatch) {
+      dispatch({ type: ActionTypes.RESET_RAFFLE })
       try {
         const raffle = await EtherRaffle.at(address)
         dispatch(RaffleActions.receive(raffle))
@@ -59,7 +61,7 @@ const RaffleActions = {
       try {
         const raffle = await EtherRaffle.at(raffleAddress)
         const value = await raffle.price()
-        const transaction = await raffle.sendTransaction({ from: bettor, value: value, gas: GAS })
+        await raffle.sendTransaction({ from: bettor, value: value, gas: GAS })
         dispatch(AccountActions.getEtherBalance(bettor))
         dispatch(RaffleActions.receive(raffle))
         dispatch(FetchingActions.stop())
@@ -69,6 +71,21 @@ const RaffleActions = {
     }
   },
 
+  close(raffleAddress, closer) {
+    return async function(dispatch) {
+      console.log(`Closing raffle ${raffleAddress} by ${closer}`);
+      dispatch(FetchingActions.start('drawing winner'))
+      try {
+        const raffle = await EtherRaffle.at(raffleAddress)
+        await raffle.close({ from: closer, gas: GAS })
+        dispatch(AccountActions.getEtherBalance(closer))
+        dispatch(RaffleActions.receive(raffle))
+        dispatch(FetchingActions.stop())
+      } catch (error) {
+        dispatch(ErrorActions.showError(error))
+      }
+    }
+  },
 
   add(address) {
     return async function(dispatch) {
@@ -102,7 +119,7 @@ const RaffleActions = {
       pot: (await raffle.pot()).toString(),
       price: (await raffle.price()).toString(),
       days: (await raffle.numberOfDays()).toString(),
-      endingDate: (await raffle.endingDate()).toString(),
+      endingDate: moment.unix((await raffle.endingDate()).toString()).format('DD/MM/YYYY - HH:mm'),
       canBeClosed: await raffle.canBeClosed(),
     }
   }

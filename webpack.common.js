@@ -26,6 +26,10 @@ const config = {
         use: 'json-loader'
       },
       {
+        test: /\.(ico|jpg|jpeg|png)$/,
+        loader: 'file-loader?name=images/[name].[ext]'
+      },
+      {
         test: /\.(woff|woff2|eot|ttf)$/,
         loader: 'file-loader?name=fonts/[name].[ext]'
       },
@@ -34,7 +38,7 @@ const config = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     // TODO: html webpack plugin breaks requests
-    // new HtmlWebpackPlugin({ template: './src/index.template.ejs', inject: 'body', title: 'Gambleth' }),
+    // new HtmlWebpackPlugin({ template: './src/index.template.ejs', inject: 'body', title: 'Gambleth', favicon: '/images/favicon.ico' }),
     new CopyWebpackPlugin([{ from: './src/index.html', to: "index.html" }]),
     new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', 'window.$': 'jquery', 'window.jQuery': 'jquery',}),
   ]

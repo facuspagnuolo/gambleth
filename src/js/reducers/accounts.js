@@ -10,9 +10,9 @@ const AccountsReducer = (state = initialState, action) => {
     case ActionTypes.RECEIVE_ETHER_BALANCE:
       return Object.assign({}, state, { balance: action.balance.toString() });
     case ActionTypes.CREATE_NEW_RAFFLE:
-      return Object.assign({}, state, { raffleAddress: action.address });
+      return Object.assign({}, state, { newRaffleAddress: action.address });
     case ActionTypes.CREATE_NEW_RAFFLE_RESET:
-      return Object.assign({}, state, { raffleAddress: null });
+      return Object.assign({}, state, { newRaffleAddress: null });
     default:
       return state
   }

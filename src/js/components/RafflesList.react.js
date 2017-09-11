@@ -10,6 +10,7 @@ export default class RafflesList extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ raffles: [] })
     Store.subscribe(() => this._onChange())
     Store.dispatch(RaffleActions.findAll())
   }
@@ -20,11 +21,7 @@ export default class RafflesList extends React.Component {
         <div className="card raffles-list">
           <div className="card-content">
             <h3 className="title">Raffles List</h3>
-            { this.state.raffles.length === 0 ?
-              <em>No raffles were found</em> :
-              <ul className="collection">
-                {this._buildRafflesList()}
-              </ul>}
+            { this.state.raffles.length === 0 ? <em>Loading...</em> : <ul className="collection">{this._buildRafflesList()}</ul>}
           </div>
         </div>
       </div>
@@ -33,12 +30,14 @@ export default class RafflesList extends React.Component {
 
   _buildRafflesList() {
     return this.state.raffles.map(raffle => {
-      const chipTitle = raffle.opened ? 'opened' : 'closed'
+      let chipTitle = raffle.opened ? 'opened' : 'closed'
+      if(raffle.canBeClosed) chipTitle = 'can be closed'
+      const chipClass = chipTitle.replace(/\s+/g, '-')
       return (
         <li className="collection-item" key={raffle.address}>
           <div>
             <Link to={`/raffles/${raffle.address}/show`}>{raffle.name}</Link> - $ {raffle.pot} (wei)
-            <span className={`chip secondary-content ${chipTitle}-chip`}>{chipTitle}</span>
+            <span className={`chip secondary-content ${chipClass}-chip`}>{chipTitle}</span>
           </div>
         </li>
       )
@@ -48,7 +47,7 @@ export default class RafflesList extends React.Component {
   _onChange() {
     if(this.refs.rafflesList) {
       const state = Store.getState();
-      if(state.raffles.list !== this.state.list) this.setState({ raffles: state.raffles.list });
+      if(state.raffles.list !== this.state.raffles) this.setState({ raffles: state.raffles.list });
     }
   }
 }

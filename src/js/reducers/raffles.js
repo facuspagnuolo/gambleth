@@ -8,6 +8,8 @@ const RafflesReducer = (state = initialState, action) => {
     case ActionTypes.ADD_RAFFLE:
       let raffles = state.list;
       return Object.assign({}, state, { list: [action.raffle].concat(raffles) })
+    case ActionTypes.RESET_RAFFLE:
+      return Object.assign({}, state, { raffle: null })
     case ActionTypes.RECEIVE_RAFFLE:
       return Object.assign({}, state, { raffle: action.raffle })
     default:

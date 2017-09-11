@@ -4,6 +4,7 @@ require('babel-polyfill')
 require('materialize-loader')
 
 import './app.scss'
+import './images/favicon.ico'
 import 'materialize-css/dist/js/materialize.js'
 import 'materialize-css/dist/css/materialize.css'
 
